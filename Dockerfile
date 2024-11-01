@@ -7,6 +7,6 @@ RUN mvn clean package -DskipTests
 
 # Runtime stage with OpenJDK 21
 FROM eclipse-temurin:21-jre
-COPY --from=build /home/app/target/*.jar /usr/local/lib/app.jar
+COPY --from=build /home/app/target/*.jar /usr/local/lib/instagram-0.0.1-SNAPSHOT
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/usr/local/lib/app.jar"]
+ENTRYPOINT ["java", "-jar", "/usr/local/lib/instagram-0.0.1-SNAPSHOT"]
