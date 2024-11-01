@@ -129,7 +129,7 @@ public class UserController
     }
 
 
-    @PostMapping("/locked")
+    @GetMapping("/locked")
     public String locked() {
         //TODO: process POST request
         
