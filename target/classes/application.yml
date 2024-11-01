@@ -4,9 +4,9 @@ spring:
 
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/instagram
+    url: postgresql://postgres:BZNASPVxXgXMXlxjZPHbZRjOSmRMKfdS@postgres.railway.internal:5432/railway
     username: postgres
-    password: root
+    password: BZNASPVxXgXMXlxjZPHbZRjOSmRMKfdSBZNASPVxXgXMXlxjZPHbZRjOSmRMKfdS
     driver-class-name: org.postgresql.Driver
 
   jpa:
