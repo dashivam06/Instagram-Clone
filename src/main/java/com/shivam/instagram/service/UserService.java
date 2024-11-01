@@ -47,18 +47,20 @@ public class UserService {
     @Autowired
     RefreshTokenJwtUtil refreshTokenJwtUtil;
 
-
-
     @Autowired
     CookieHandler cookieHandler;
 
-    public User saveUser(UserWrapper userWrapper) {
+    public User saveUser(UserWrapper userWrapper, HttpServletResponse httpServletResponse) {
 
-        System.out.println(userWrapper.getIsEmailVerified());
         User user = new User(userWrapper.getUserName(), userWrapper.getFullName(), userWrapper.getEmail(),
                 passwordEncoder.encode(userWrapper.getPassword()), userWrapper.getProfilePic(),
-                userWrapper.getIsEmailVerified(), userWrapper.getDateOfBirth(), time.getGMT_Time("yyyy-MM-dd HH:mm:ss"));
+                userWrapper.getIsEmailVerified(), userWrapper.getDateOfBirth(),
+                time.getGMT_Time("yyyy-MM-dd HH:mm:ss"));
 
+        /*
+         * Get the ip address from the request body and then process it and save it in the db  
+         */
+        
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest();
 
@@ -68,6 +70,12 @@ public class UserService {
         }
 
         user.setIpAddress(ip);
+
+        setAccessTokenInCookie(httpServletResponse, userWrapper.getUserName(), null, "/", 1000 * 60 * 30,
+                "None");
+        setRefreshTokenInCookie(httpServletResponse, userWrapper.getUserName(), null, "/", 1000 * 60 * 30,
+                "None");
+
         return userRepository.save(user);
     }
 
@@ -82,14 +90,12 @@ public class UserService {
                     .authenticate(new UsernamePasswordAuthenticationToken(userKey, password));
 
             if (authentication.isAuthenticated()) {
-                String accessJwtToken = accessTokenJwtUtil.generateToken(userKey);
 
-                String refreshJwtToken = refreshTokenJwtUtil.generateToken(userKey);
-                
-                cookieHandler.setDesiredCookie(httpServletResponse, "access_token", accessJwtToken, null, "/", 1000 * 60 * 30,
+                setAccessTokenInCookie(httpServletResponse, userKey, null, "/", 1000 * 60 * 30,
                         "None");
-                cookieHandler.setDesiredCookie(httpServletResponse, "refresh_token", refreshJwtToken, null, "/", 1000 * 60 * 30,
+                setRefreshTokenInCookie(httpServletResponse, userKey, null, "/", 1000 * 60 * 30,
                         "None");
+
                 return new ResponseBody(true, 200, authentication.getPrincipal(), "Login successful", "/login");
             }
 
@@ -106,6 +112,23 @@ public class UserService {
 
         return responseBody;
 
+    }
+
+    public void setAccessTokenInCookie(HttpServletResponse httpServletResponse, String userKey, String domain,
+            String path, Integer durartionInMilliSec, String sameSite) {
+        String accessJwtToken = accessTokenJwtUtil.generateToken(userKey);
+
+        cookieHandler.setDesiredCookie(httpServletResponse, "access_token", accessJwtToken, domain, path,
+                durartionInMilliSec,
+                sameSite);
+    }
+
+    public void setRefreshTokenInCookie(HttpServletResponse httpServletResponse, String userKey, String domain,
+            String path, Integer durartionInMilliSec, String sameSite) {
+        String refreshJwtToken = refreshTokenJwtUtil.generateToken(userKey);
+
+        cookieHandler.setDesiredCookie(httpServletResponse, "refresh_token", refreshJwtToken, null, "/", 1000 * 60 * 30,
+                "None");
     }
 
 }

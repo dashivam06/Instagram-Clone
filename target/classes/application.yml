@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: instagram
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/instagram
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+
+myapp:
+  instagram:
+    jwt:
+      access-token :
+        secretkey: "3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b"
+        expiration-time :  1800000
+      refresh-token :
+        secretkey: "3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b"
+        expiration-time :  604800000

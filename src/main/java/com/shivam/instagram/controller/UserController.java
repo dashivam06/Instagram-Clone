@@ -77,22 +77,14 @@ public class UserController
 
 
     @PostMapping("/sign-up")
-    public ResponseBody signUp(@RequestBody UserWrapper userWrapper) 
+    public ResponseBody signUp(@RequestBody UserWrapper userWrapper, HttpServletResponse httpServletResponse) 
     {
         
-        User user = userService.saveUser(userWrapper);
+        User user = userService.saveUser(userWrapper,httpServletResponse);
 
         return new ResponseBody(true, 200, user, "User creation successful", "/sign-up");
     }
     
-    
-
-
-    @GetMapping("/hello")
-    public String getMethodName( String param) {
-        System.out.println("Hello World");
-        return new String("Hello");
-    }
 
 
     @GetMapping("/cookie")
@@ -131,9 +123,6 @@ public class UserController
         UserDetails userDetails = userDetailService.loadUserByUsername(username);
         boolean isValid = jwtUtil.validateToken(entity, userDetails);
 
-        
-        // System.out.println("UserName : "+username );
-        // System.out.println("UserName : "+userDetails.getUsername());
 
 
         return "isValid  : " +isValid;
