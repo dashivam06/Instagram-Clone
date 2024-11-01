@@ -96,6 +96,13 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version> <!-- Change this version -->
 				<configuration>
+
+					<archive>
+						<manifest>
+							<mainClass>com.shivam.instagram.InstagramApplication</mainClass> <!-- Replace with your main class -->
+						</manifest>
+					</archive>
+
 					<source>21</source>
 					<target>21</target>
 					<annotationProcessorPaths>
