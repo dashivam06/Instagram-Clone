@@ -96,13 +96,6 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version> <!-- Change this version -->
 				<configuration>
-
-					<archive>
-						<manifest>
-							<mainClass>com.shivam.instagram.InstagramApplication</mainClass> <!-- Replace with your main class -->
-						</manifest>
-					</archive>
-
 					<source>21</source>
 					<target>21</target>
 					<annotationProcessorPaths>
@@ -114,6 +107,21 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.shivam.instagram.InstagramApplication</mainClass> <!-- Ensure this path is correct -->
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+
 		</plugins>
 	</build>
 
