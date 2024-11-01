@@ -1,4 +1,4 @@
-FROM maven:3.9.9-jdk-21-slim AS build
+FROM maven:3.9.9-ibm-semeru-21-jdk-slim AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
