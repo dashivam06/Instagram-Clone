@@ -11,6 +11,7 @@ import com.shivam.instagram.controller.UserWrapper;
 import com.shivam.instagram.entity.User;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer>
@@ -23,6 +24,7 @@ public interface UserRepository extends JpaRepository<User,Integer>
 
     Optional<User> findByUserName(String username);
 
+    @Transactional
     Optional<User> deleteByUserName(String username);
     
 
