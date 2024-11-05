@@ -121,7 +121,7 @@ public class UserController
     }
     
 
-    @GetMapping("/createCr7")
+    @GetMapping("/create-cr7")
     public String createCr7(HttpServletResponse response) {
         UserWrapper userWrapper = new UserWrapper("cr7","Cristiano Ronaldo", "ronaldo@cr7.com", "georgina", "https://example.com/profile/cristiano.jpg", true, "2007-02-05");
         userService.saveUser(userWrapper, response);
@@ -130,12 +130,12 @@ public class UserController
     }
 
 
-    @GetMapping("/delCr7")
+    @GetMapping("/del-cr7")
     public String delCr7(HttpServletResponse response) {
 
-        userRepository.deleteByUserName("cr7");
+        Optional<User> deletedUser = userRepository.deleteByUserName("cr7");
 
-        return new String("User Deleted");
+        return deletedUser.toString();
     }
     
     

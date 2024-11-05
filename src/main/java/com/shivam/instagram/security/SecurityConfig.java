@@ -44,7 +44,7 @@ public class SecurityConfig
             .authorizeHttpRequests(request -> 
                 request
                 .requestMatchers("/admin","/admin/**").hasRole("ADMIN")
-                .requestMatchers("/sign-in","/sign-up","/generate","getAllUser","createCr7","delCr7").permitAll()
+                .requestMatchers("/sign-in","/sign-up","/generate","getAllUser","create-cr7","del-cr7").permitAll()
                 .requestMatchers("/locked").authenticated()
                     .anyRequest().permitAll());
 
